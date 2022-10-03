@@ -37,3 +37,12 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     is_active: bool
+
+
+class AuthToken(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class Payload(BaseModel):
+    username: str
