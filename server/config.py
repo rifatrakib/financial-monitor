@@ -4,6 +4,9 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     app_name: str
     rds_uri: str
+    algorithm: str
+    secret_key: str
+    access_token_expiry: int
 
     class Config:
         env_file = ".env"
