@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 from email_validator import EmailNotValidError, validate_email
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
@@ -38,13 +38,13 @@ class User(Base):
         regex = r"^([0-9\(\)\/\+ \-]*)$"
         pat = re.compile(regex)
         if number and not re.search(pat, number):
-            raise ValueError(f"phone number invalid. provide a valid {key}")
+            raise ValueError("phone number invalid")
 
         return number
 
     @validates("birthday")
     def birthday_validator(self, key, dt):
-        if dt > datetime.utcnow():
+        if dt > datetime.now().replace(tzinfo=timezone.utc):
             raise ValueError(f"birthday cannot be a future date. provide a valid {key}")
 
         return dt
