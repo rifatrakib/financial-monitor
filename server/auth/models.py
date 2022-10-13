@@ -35,7 +35,7 @@ class User(Base):
 
     @validates("phone_number")
     def phone_number_validator(self, key, number):
-        regex = r"^([0-9\(\)\/\+ \-]*)$"
+        regex = r"[\+\d]?(\d{2,3}[-\.\s]??\d{2,3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$"
         pat = re.compile(regex)
         if number and not re.search(pat, number):
             raise ValueError("phone number invalid")
