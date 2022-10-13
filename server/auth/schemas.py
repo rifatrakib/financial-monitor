@@ -25,7 +25,7 @@ class UserBase(BaseModel):
 
     @validator("phone_number")
     def phone_number_validation(cls, value):
-        regex = r"^([0-9\(\)\/\+ \-]*)$"
+        regex = r"[\+\d]?(\d{2,3}[-\.\s]??\d{2,3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})$"
         pat = re.compile(regex)
         if value and not re.search(pat, value):
             raise ValueError("phone number invalid")
@@ -51,6 +51,9 @@ class User(UserBase):
 
 class UserInResponse(UserBase):
     id: int
+
+    class Config:
+        orm_mode = True
 
 
 class Password(BaseModel):
